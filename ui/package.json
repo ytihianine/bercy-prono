@@ -9,10 +9,9 @@
     "lint": "next lint",
     "predev": "only-include-used-icons",
     "prebuild": "only-include-used-icons",
-    "lint:fix": "npx eslint . --fix",
-    "format": "npx prettier . --check",
-    "format:fix": "npx prettier . --write",
-    "prepare": "husky"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "setup-husky": "cd .. && husky ui/.husky"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.9.20",
@@ -28,6 +27,7 @@
     "eslint-config-next": "14.2.4",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
     "typescript": "^5"
   },
   "type": "module",
