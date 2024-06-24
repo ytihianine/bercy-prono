@@ -9,8 +9,10 @@
     "lint": "next lint",
     "predev": "only-include-used-icons",
     "prebuild": "only-include-used-icons",
-    "precommit": "pretty-quick --staged",
-    "prepare": "husky install .husky"
+    "lint:fix": "npx eslint . --fix",
+    "format": "npx prettier . --check",
+    "format:fix": "npx prettier . --write",
+    "prepare": "husky"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.9.20",
@@ -28,5 +30,8 @@
     "lint-staged": "^15.2.7",
     "typescript": "^5"
   },
-  "type": "module"
+  "type": "module",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
 }
