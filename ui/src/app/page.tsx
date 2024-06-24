@@ -5,7 +5,7 @@ export default function Home() {
     <>
     <div className="Content">
     <h1>
-      HEllow worlds! 2! 3! 4!
+      HEllow worlds! 2! 3! 4! 5! 6!
       </h1>
     </div>
 
