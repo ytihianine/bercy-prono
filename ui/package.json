@@ -31,7 +31,15 @@
     "typescript": "^5"
   },
   "type": "module",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
