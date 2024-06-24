@@ -9,7 +9,8 @@
     "lint": "next lint",
     "predev": "only-include-used-icons",
     "prebuild": "only-include-used-icons",
-    "prepare": "husky install"
+    "precommit": "pretty-quick --staged",
+    "prepare": "husky install .husky"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.9.20",
@@ -27,12 +28,5 @@
     "lint-staged": "^15.2.7",
     "typescript": "^5"
   },
-  "type": "module",
-  "lint-staged": {
-    "!(*.ts)": "prettier --write",
-    "*.ts": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  }
+  "type": "module"
 }
