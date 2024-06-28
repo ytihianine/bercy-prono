@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { DsfrHead } from "@codegouvfr/react-dsfr/next-appdir/DsfrHead";
 import { DsfrProvider } from "@codegouvfr/react-dsfr/next-appdir/DsfrProvider";
 import { getHtmlAttributes } from "@codegouvfr/react-dsfr/next-appdir/getHtmlAttributes";
@@ -10,14 +10,23 @@ import { Header } from "@codegouvfr/react-dsfr/Header";
 import { Footer } from "@codegouvfr/react-dsfr/Footer";
 import { Badge } from "@codegouvfr/react-dsfr/Badge";
 import Link from "next/link";
-import './globals.css';  // Assurez-vous que ce fichier CSS est importé
+import { useRouter } from "next/navigation";
+import "./globals.css";
+import "@codegouvfr/react-dsfr/dsfr/utility/icons/icons-system/icons-system.css";
+
 
 export default function RootLayout({ children }: { children: JSX.Element }) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
 
   const handleActiveTab = (index: number) => {
     setActiveTab(index);
   };
+
+  const handleLogOut = () => {
+    localStorage.removeItem('bearToken')
+    router.push("/");
+  }
 
   const lang = "fr";
   return (
@@ -27,6 +36,7 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
         <DsfrHead Link={Link} />
       </head>
       <body>
+
         <DsfrProvider lang={lang}>
           <div className="main">
             <Header
@@ -37,39 +47,48 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
                   OFFICIEL
                 </>
               }
+              quickAccessItems={[
+                {
+                  buttonProps: {
+                    onClick: handleLogOut
+                  },
+                  iconId: 'fr-icon-error-line',
+                  text: 'Se déconnecter'
+                }
+              ]}
               homeLinkProps={{
                 href: "/",
-                title: "Accueil - Bercy Prono",
+                title: "Accueil - Bercy Prono"
               }}
               id="fr-header-simple-header-with-service-title-and-tagline"
               // onClick={() => alert("test")}
               navigation={[
                 {
                   linkProps: {
-                    href: '/pronostiques',
-                    target: '_self',
+                    href: "/pronostiques",
+                    target: "_self",
                     onClick: () => handleActiveTab(0)
                   },
-                  text: 'Mes pronostics',
-                  isActive: activeTab === 0,
+                  text: "Mes pronostics",
+                  isActive: activeTab === 0
                 },
                 {
                   linkProps: {
-                    href: '/classement',
-                    target: '_self',
+                    href: "/classement",
+                    target: "_self",
                     onClick: () => handleActiveTab(1)
                   },
-                  text: 'Classement général',
-                  isActive: activeTab === 1,
+                  text: "Classement général",
+                  isActive: activeTab === 1
                 },
                 {
                   linkProps: {
-                    href: '/regles',
-                    target: '_self',
+                    href: "/regles",
+                    target: "_self",
                     onClick: () => handleActiveTab(2)
                   },
-                  text: 'Règles de calcul',
-                  isActive: activeTab === 2,
+                  text: "Règles de calcul",
+                  isActive: activeTab === 2
                 }
               ]}
               serviceTitle={
@@ -81,9 +100,8 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
                 </>
               }
             />
-            <div class="fr-container">
-              {children}
-            </div>
+            <div class="fr-container">{children}</div>
+
             <Footer
               className="CustomFooter"
               accessibility="fully compliant"
@@ -95,10 +113,10 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
                 à la gestion et au développement de votre entreprise.
               "
               termsLinkProps={{
-                href: "#",
+                href: "#"
               }}
               websiteMapLinkProps={{
-                href: "#",
+                href: "#"
               }}
             />
           </div>

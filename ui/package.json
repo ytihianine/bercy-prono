@@ -16,6 +16,7 @@
   "dependencies": {
     "@codegouvfr/react-dsfr": "^1.9.20",
     "next": "14.2.4",
+    "next-client-cookies": "^1.1.1",
     "react": "^18",
     "react-dom": "^18"
   },

@@ -2,38 +2,53 @@
 
 import { Input } from "@codegouvfr/react-dsfr/Input";
 import { Button } from "@codegouvfr/react-dsfr/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Alert from "@codegouvfr/react-dsfr/Alert";
+import styles from "./connexion.module.css"
 
 export default function Connexion() {
+  const router = useRouter();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
+    provider: "db",
+    refresh: "true"
   });
 
   const handleInputChange = (event: any) => {
     const { name, value } = event.target;
     setCredentials({
       ...credentials,
-      [name]: value,
+      [name]: value
     });
   };
 
   const handleLogin = async () => {
-    const res = await fetch("/api/auth/login", {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/security/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(credentials)
     });
 
-    const user = await res.json();
+    const loginResult = await res.json();
+    const access_token = loginResult['access_token']
 
-    if (user) {
-      setUser(user);
-      router.push("/");
+    if (access_token) {
+      localStorage.setItem('bearToken', access_token)
+      localStorage.setItem('usernameBercyProno', credentials['username'])
+      router.push("/pronostiques");
     }
   };
+
+  // Check if user is logged
+  useEffect(() => {
+    if (localStorage.getItem("bearToken") !!= null) {
+      router.push("/pronostiques")
+    }
+  }, [])
 
   return (
     <>
@@ -45,7 +60,7 @@ export default function Connexion() {
         value={credentials.username}
         onChange={handleInputChange}
         nativeInputProps={{
-          name: "username",
+          name: "username"
         }}
       />
       <Input
@@ -56,22 +71,21 @@ export default function Connexion() {
         onChange={handleInputChange}
         nativeInputProps={{
           name: "password",
-          type: "password",
+          type: "password"
         }}
       />
+
       <Button
-        onClick={() => {
-          alert(
-            `Connexion avec ${credentials.username} et ${credentials.password}`
-          );
-        }}
+        className={styles['button-custom']}
+        onClick={handleLogin}
       >
         Se connecter
       </Button>
-      <br></br>
+
       <Button
+        className={styles['button-custom']}
         onClick={() => {
-          alert("S'enregistrer");
+          router.push("/authentification/enregistrement");
         }}
       >
         S'enregistrer

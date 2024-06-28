@@ -12,7 +12,7 @@ declare module "@codegouvfr/react-dsfr/next-appdir" {
 
 startReactDsfr({ defaultColorScheme, Link });
 
-export function StartDsfr(){
+export function StartDsfr() {
   //Yes, leave null here.
   return null;
 }
